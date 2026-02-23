@@ -23,12 +23,30 @@ def _allowed_file(filename):
 def upload_receipt():
     user_id = int(get_jwt_identity())
 
+    ct = (request.content_type or "").lower()
+    if "multipart" not in ct and "form-data" not in ct:
+        return (
+            jsonify(
+                {
+                    "error": "Request must be multipart/form-data with a 'file' field. Check that the client is not sending Content-Type: application/json.",
+                }
+            ),
+            400,
+        )
+
     if "file" not in request.files:
-        return jsonify({"error": "No file provided"}), 400
+        return (
+            jsonify(
+                {
+                    "error": "No file provided. Send the image as multipart/form-data with field name 'file'.",
+                }
+            ),
+            400,
+        )
 
     file = request.files["file"]
     if not file.filename or not _allowed_file(file.filename):
-        return jsonify({"error": "Invalid file type"}), 400
+        return jsonify({"error": "Invalid file type. Use PNG, JPG, JPEG, or WebP."}), 400
 
     ext = file.filename.rsplit(".", 1)[1].lower()
     filename = f"{uuid.uuid4().hex}.{ext}"
