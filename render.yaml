@@ -1,0 +1,12 @@
+# Render Blueprint: backend only. Add DATABASE_URL, SECRET_KEY, JWT_SECRET_KEY (and optionally FRONTEND_URL) in the Render dashboard.
+services:
+  - type: web
+    name: cafe-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --config gunicorn_config.py run:app
+    preDeployCommand: flask --app run:app db upgrade
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
