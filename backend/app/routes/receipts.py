@@ -3,6 +3,7 @@ import uuid
 from datetime import datetime
 from flask import Blueprint, request, jsonify, current_app, send_from_directory
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from app import db
 from app.models import User, Receipt
 from app.services.ocr_service import run_ocr, upsert_to_pinecone, search_receipts
 from app.activity_log import log_activity

@@ -49,12 +49,12 @@ Click **Create Web Service**. Render will build and deploy. The first time, the 
 
 ### 5. Seed the admin user (one-time)
 
-After the service is live, create the first admin account. Replace `YOUR_RENDER_URL` with your actual URL (e.g. `https://cafe-backend.onrender.com`):
+After the service is live, create the first admin account. Replace `YOUR_RENDER_URL` with your actual URL (e.g. `https://cafe-backend.onrender.com`). Use login `admin` and password `admin0691` (or configure admin in `backend/app/hardcoded_users.py` and redeploy—this app uses hardcoded users, so the curl below may be disabled):
 
 ```bash
 curl -X POST https://YOUR_RENDER_URL/api/auth/seed-admin \
   -H "Content-Type: application/json" \
-  -d "{\"name\": \"Admin\", \"email\": \"admin@ministry.org\", \"password\": \"YOUR_SECURE_PASSWORD\"}"
+  -d "{\"username\": \"admin\", \"password\": \"admin0691\"}"
 ```
 
 Use a strong password and keep it safe. The seed endpoint is disabled after the first admin is created.

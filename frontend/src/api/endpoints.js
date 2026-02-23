@@ -18,7 +18,6 @@ export const receipts = {
     const form = new FormData();
     form.append("file", file);
     return api.post("/receipts/upload", form, {
-      headers: { "Content-Type": "multipart/form-data" },
       onUploadProgress: onProgress,
     });
   },
